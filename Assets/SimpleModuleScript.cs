@@ -177,7 +177,7 @@ public class SimpleModuleScript : MonoBehaviour {
 	public int curChar = 0;
 
 	#pragma warning disable 414
-	private string TwitchHelpMessage = "insert help message here";
+	private string TwitchHelpMessage = "The commands that you can use are: !{0} colorblind (toggles colorblind mode), !{0} submit . (presses dot button), !{0} submit / (presses slash button), !{0} switch hertz (changes the hertz number) and !{0} tx hertz (submits the hertz number).";
 	#pragma warning restore 414
 
 	private bool colorblindSupportOn;
