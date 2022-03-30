@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>Hertz — Keep Talking and Nobody Explodes Module</title>
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/ktane-utils.js"></script>       
+</head>
+<body>
+    <div class="section">
+        <div class="page page-bg-01">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">Hertz</span>
+            </div>
+            <div class="page-content">
+                <img src="img/Component/Hertz.svg" class="diagram">
+                <h2>On the Subject of Hertz</h2>
+                <p class="flavour-text">Eureka! I got it! Let's make this bomb more difficult by adding a transmitter to decode a message. SO BRILLIANT!</p>
+                
+                <p>This module displays 2 leds, a transmitter led, 2 screens and 4 buttons. The buttons will be labelled from left to right:</p>
+				<p> . TX > / </p>
+
+                <h3>Finding the TX number</h3>
+                To start the flashing, you must transmit the correct number. Move in the shown grid using the table (the grid loops round). 
+				The column is either the color of the left and right led for the 1st and 2nd moves OR the amount of on indicators 
+				for the 3rd move. When you get a direction, move in that way. Starting point is 466. Use the left 
+				led move, then the right led move, then the indicator move.</p>
+				
+				<img style='width: 35%' src="img/Component/Modify graph 1.png" />
+				
+				<table>
+				<tr>
+				<th>Table</th>
+				<th>Black/0</th>
+				<th>Green/1</th>
+				<th>Orange/2</th>
+				<th>Red/3</th>
+				<th>White/4</th>
+				<th>Blue/5</th>
+				<th>Purple/>5</th>
+				</tr>
+				<tr>
+				<th>Left LED</th>
+				<th>No move</th>
+				<th>Up</th>
+				<th>Right</th>
+				<th>Down</th>
+				<th>Left</th>
+				<th>Up-Right</th>
+				<th>Up-Left</th>
+				</tr>
+				<tr>
+				<th>Right LED</th>
+				<th>No move</th>
+				<th>Up</th>
+				<th>Right</th>
+				<th>Down</th>
+				<th>Left</th>
+				<th>Up-Right</th>
+				<th>Up-Left</th>
+				</tr>
+				<tr>
+				<th>On Indicators</th>
+				<th>Up twice</th>
+				<th>Up-Right twice</th>
+				<th>Right twice</th>
+				<th>Down-Right twice</th>
+				<th>Down twice</th>
+				<th>Left twice</th>
+				<th>Up-Left twice</th>
+				</tr>
+				</table>
+				
+				<p>After all of the moves, you should get a number. If the number is 0, you have done something wrong. Use the '>' button to
+				switch through the hertz on the yellow screen until your number appears. Press the 'TX' button on that number to begin the flashes.
+				Note that when the flashes start, the '>' button and the 'TX' button cannot be pressed.</p>
+				
+				<h3>The Flashes</h3>
+				<p>The transmitting LED will flash between white, black and orange. A white flash for 1 second equals a '.' , a black
+				flash for 1 second equals a '/' , an orange flash for 1 second equals a pause between letters and and orange flash
+				for 4 seconds equals a pause between repeats. These should be noted down. The flashing will only end when the module is
+				completed.</p>
+
+            </div>
+            <div class="page-footer relative-footer">Page 1 of 3</div>
+        </div>
+        <div class="page page-bg-02">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">Hertz</span>
+            </div>
+            <div class="page-content">
+			
+                <h3>Decoding the word</h3>
+				<p>When you have noted down the dots and slashes, remembering the pauses, find the corresponding letters.
+				If the process was done correctly, you should have a word. This word will be used later</p>
+				<table>
+				<tr>
+				<th>Letter</th>
+				<th>Result Code</th>
+				</tr>
+				<tr>
+				<th>A</th>
+				<th>././//</th>
+				</tr>
+				<tr>
+				<th>B</th>
+				<th>././/.</th>
+				</tr>
+				<tr>
+				<th>C</th>
+				<th>..././</th>
+				</tr>
+				<tr>
+				<th>D</th>
+				<th>../../</th>
+				</tr>
+				<tr>
+				<th>E</th>
+				<th>/.////</th>
+				</tr>
+				<tr>
+				<th>F</th>
+				<th>.././/</th>
+				</tr>
+				<tr>
+				<th>G</th>
+				<th>././..</th>
+				</tr>
+				<tr>
+				<th>H</th>
+				<th>....//</th>
+				</tr>
+				<tr>
+				<th>I</th>
+				<th>/..///</th>
+				</tr>
+				<tr>
+				<th>J</th>
+				<th>./../.</th>
+				</tr>
+				<tr>
+				<th>K</th>
+				<th>./....</th>
+				</tr>
+				<tr>
+				<th>L</th>
+				<th>./..//</th>
+				</tr>
+				<tr>
+				<th>M</th>
+				<th>...../</th>
+				</tr>
+				<tr>
+				<th>N</th>
+				<th>...//.</th>
+				</tr>
+				<tr>
+				<th>O</th>
+				<th>.//./.</th>
+				</tr>
+				<tr>
+				<th>P</th>
+				<th>.//.//</th>
+				</tr>
+				<tr>
+				<th>Q</th>
+				<th>..//..</th>
+				</tr>
+				<tr>
+				<th>R</th>
+				<th>...///</th>
+				</tr>
+				<tr>
+				<th>S</th>
+				<th>.//...</th>
+				</tr>
+				<tr>
+				<th>T</th>
+				<th>.././.</th>
+				</tr>
+				<tr>
+				<th>U</th>
+				<th>../...</th>
+				</tr>
+				<tr>
+				<th>V</th>
+				<th>./././</th>
+				</tr>
+				<tr>
+				<th>W</th>
+				<th>.//../</th>
+				</tr>
+				<tr>
+				<th>X</th>
+				<th>.../..</th>
+				</tr>
+				<tr>
+				<th>Y</th>
+				<th>..../.</th>
+				</tr>
+				<tr>
+				<th>Z</th>
+				<th>./.../</th>
+				</tr>
+				</table>
+				
+				<h3>Turning the word into a number</h3>
+				<p>Now that we have our word, we must turn it into a number. Using the coordinates from the previous table, put them into
+				the new table to recieve a number: </p>
+				
+				<img style='width: 35%' src="img/Component/Modify graph 2.png" />
+				
+				<p>After you find your number, add 1 and multiply it by one more than the amount of port plates. Now, using the letters
+				in your word, modify this number. Do these bullet points from top to bottom.</p>
+				<ul>
+				<li>If there is a vowel (not including y), take away three from your number, multiply it by 2 and take the absolute value.</li>
+				<li>If there is one of the letters 'BCDFG', add 13 to your number.</li>
+				<li>If there is one of the letters 'LMNPQ', divide your number by 5, ignoring remainders.</li>
+				<li>If there is one of the letters 'RWXYZ', add 10 to your number and modulo by 76.</li>
+				</ul>
+				
+				<p>Modulo your number by 26 and convert your number to a letter (where A is 0 and Z is 25). You will now input this letter.</p>
+				
+            </div>
+            <div class="page-footer relative-footer">Page 2 of 3</div>
+        </div>
+        <div class="page page-bg-03">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">Hertz</span>
+            </div>
+            <div class="page-content">
+                <h3>Inputting</h3>
+				<p>Now, turn your letter into a code of dots and slashes using the decoding table from page 2.
+				Input this via the '.' and '/' buttons. Your inputs will be recorded on the red display. When all valid
+				inputs have been made, press either buttons to solve the module.</p>
+				
+				<h3>Striking</h3>
+				<p>If the wrong hertz was inputted or the wrong code button of '.' and '/' was inputted, you
+				will recieve a strike. The modules answer will not change but if you got a strike from the '.'
+				and '/' inputs, the red screen will reset and you will have to input the code again.</p>
+				
+            </div>
+            <div class="page-footer relative-footer">Page 3 of 3</div>
+        </div>
+    </div>
+</body>
+</html>
