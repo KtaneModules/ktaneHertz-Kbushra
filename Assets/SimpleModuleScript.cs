@@ -1046,107 +1046,37 @@ public class SimpleModuleScript : MonoBehaviour {
 
 	IEnumerator ProcessTwitchCommand(string command)
 	{
-		yield return null;
 		command = command.ToLowerInvariant();
 
 		if (command == "colorblind") 
 		{
 			colorblindSupportOn = !colorblindSupportOn;
 			colorblind ();
+			yield return null;
+			yield break;
 		}
 		if (command == "submit .") 
 		{
-			if (intSubmitAnswers [curChar] == 1)
-			{
-				inputScreen.text += ".";
-				curChar++;
-			}
-			else
-			{
-				if (intSubmitAnswers [curChar] == 2) 
-				{
-					module.HandlePass ();
-					_isSolved = true;
-					Log ("Solved!");
-				}
-				else
-				{
-					incorrect = true;
-					Log ("Wrong character");
-				}
-			}
-			if (incorrect) 
-			{
-				module.HandleStrike ();
-				incorrect = false;
-			}
+			messageButtons[0].OnInteract();
+			yield return null;
+			yield break;
 		}
 		if (command == "submit /") 
 		{
-			if (intSubmitAnswers [curChar] == 0)
-			{
-				inputScreen.text += "/";
-				curChar++;
-			}
-			else
-			{
-				if (intSubmitAnswers [curChar] == 2) 
-				{
-					module.HandlePass ();
-					_isSolved = true;
-					Log ("Solved!");
-				}
-				else
-				{
-					incorrect = true;
-					Log ("Wrong character");
-				}
-			}
-			if (incorrect) 
-			{
-				module.HandleStrike ();
-				incorrect = false;
-			}
+			messageButtons[1].OnInteract();
+			yield return null;
+			yield break;
 		}
 		if (command == "switch hertz") 
 		{
-			hertzChooserNum++;
-			hertzChooserNum = hertzChooserNum % 19;
-			hertzChooserText.text = chooserTable [hertzChooserNum].ToString ();
-			Debug.LogFormat ("[Hertz #{0}] Input hertz num switched to {1}.", ModuleId, chooserTable[hertzChooserNum]);
+			hertzButtons[1].OnInteract();
+			yield return null;
+			yield break;
 		}
-		if (command == "tx hertz") 
+		if (command == "tx hertz")
 		{
-			if (hertzChooserNum == -1) 
-			{
-				yield break;
-			}
-			if (hertzNum == chooserTable[hertzChooserNum] && flashing == false) 
-			{
-				message = "";
-				messageInt = Rnd.Range (0, 50);
-				message = morseWords [messageInt];
-				key = "";
-				morseKey = Encode (key);
-				encodedMessage = Encode (message);
-
-				messageToInt ();
-
-				//flash triggers
-				Log ("Flash starting.");
-				StartCoroutine (Flashes ());
-
-				flashing = true;
-			}
-			else
-			{
-				incorrect = true;
-			}
-			if (incorrect) 
-			{
-				module.HandleStrike ();
-				incorrect = false;
-			}
+			hertzButtons[0].OnInteract();
+			yield return null;
 		}
 	}
 
