@@ -30,7 +30,6 @@ public class SimpleModuleScript : MonoBehaviour {
 	public GameObject[] colorDisplays;
 	int randomColor1;
 	int randomColor2;
-	private string key;
 	public string message;
 	private int messageInt;
 	private int[] encodedMessage;
@@ -922,6 +921,7 @@ public class SimpleModuleScript : MonoBehaviour {
 
 		if (_isSolved == false && flashing == true)
 		{
+			incorrect = false;
 			switch (buttonPosition) 
 			{
 			case 0:
@@ -974,7 +974,6 @@ public class SimpleModuleScript : MonoBehaviour {
 				module.HandleStrike ();
 				curChar = 0;
 				inputScreen.text = "";
-				incorrect = false;
 			}
 		}
 	}
@@ -986,6 +985,7 @@ public class SimpleModuleScript : MonoBehaviour {
 
 		if (_isSolved == false && flashing == false)
 		{
+			incorrect = false;
 			switch (buttonPosition)  
 			{
 			case 0:
@@ -998,7 +998,6 @@ public class SimpleModuleScript : MonoBehaviour {
 					message = "";
 					messageInt = Rnd.Range (0, 50);
 					message = morseWords [messageInt];
-					key = "";
 					encodedMessage = Encode (message);
 					Debug.LogFormat("[Hertz #{0}] Word is {1}", ModuleId, message);
 
@@ -1037,11 +1036,10 @@ public class SimpleModuleScript : MonoBehaviour {
 	}
 
 #pragma warning disable 414
-	private string TwitchHelpMessage = "!{0} colorblind [toggles colorblind mode], !{0} submit ./././ [Submits a sequence of ], !{0} hertz ### (tries to cycle to the specified hertz number and then presses the transmit button).";
+	private string TwitchHelpMessage = "!{0} colorblind [toggles colorblind mode], !{0} submit ./././ [Submits a sequence of .'s and /'s], !{0} hertz ### (tries to cycle to the specified hertz number and then presses the transmit button).";
 #pragma warning restore 414
 	IEnumerator ProcessTwitchCommand(string command)
 	{
-		var usedCommand = command.ToLowerInvariant();
 		var colorblindMatch = Regex.Match(command, @"^colou?rblind$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 		var hertzFreqMatch = Regex.Match(command, @"^hertz\s\d{3}$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 		var submitMatch = Regex.Match(command, @"^submit\s[\./]{6}$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
