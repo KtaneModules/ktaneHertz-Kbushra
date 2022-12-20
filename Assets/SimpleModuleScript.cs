@@ -30,8 +30,6 @@ public class SimpleModuleScript : MonoBehaviour {
 	public GameObject[] colorDisplays;
 	int randomColor1;
 	int randomColor2;
-
-	private int[] morseKey;
 	private string key;
 	public string message;
 	private int messageInt;
@@ -175,10 +173,6 @@ public class SimpleModuleScript : MonoBehaviour {
 	public string letterSubmitAnswers;
 	public int[] intSubmitAnswers;
 	public int curChar = 0;
-
-	#pragma warning disable 414
-	private string TwitchHelpMessage = "The commands that you can use are: !{0} colorblind (toggles colorblind mode), !{0} submit . (presses dot button), !{0} submit / (presses slash button), !{0} switch hertz (changes the hertz number) and !{0} tx hertz (submits the hertz number).";
-	#pragma warning restore 414
 
 	private bool colorblindSupportOn;
 
@@ -1005,7 +999,6 @@ public class SimpleModuleScript : MonoBehaviour {
 					messageInt = Rnd.Range (0, 50);
 					message = morseWords [messageInt];
 					key = "";
-					morseKey = Encode (key);
 					encodedMessage = Encode (message);
 					Debug.LogFormat("[Hertz #{0}] Word is {1}", ModuleId, message);
 
@@ -1032,7 +1025,6 @@ public class SimpleModuleScript : MonoBehaviour {
 			if (incorrect) 
 			{
 				module.HandleStrike ();
-				incorrect = false;
 			}
 		}
 	}
@@ -1044,39 +1036,55 @@ public class SimpleModuleScript : MonoBehaviour {
 		Debug.LogFormat("[Hertz #{0}] {1}", ModuleId, message);
 	}
 
+#pragma warning disable 414
+	private string TwitchHelpMessage = "!{0} colorblind [toggles colorblind mode], !{0} submit ./././ [Submits a sequence of ], !{0} hertz ### (tries to cycle to the specified hertz number and then presses the transmit button).";
+#pragma warning restore 414
 	IEnumerator ProcessTwitchCommand(string command)
 	{
-		command = command.ToLowerInvariant();
-
-		if (command == "colorblind") 
+		var usedCommand = command.ToLowerInvariant();
+		var colorblindMatch = Regex.Match(command, @"^colou?rblind$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		var hertzFreqMatch = Regex.Match(command, @"^hertz\s\d{3}$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		var submitMatch = Regex.Match(command, @"^submit\s[\./]{6}$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		if (colorblindMatch.Success) 
 		{
+			yield return null;
 			colorblindSupportOn = !colorblindSupportOn;
 			colorblind ();
-			yield return null;
 			yield break;
 		}
-		if (command == "submit .") 
-		{
-			messageButtons[0].OnInteract();
-			yield return null;
-			yield break;
+		else if (submitMatch.Success)
+        {
+			var messagePart = submitMatch.Value.Split().Last();
+			incorrect = false;
+            for (var x = 0; x < messagePart.Length && !incorrect; x++)
+            {
+				yield return null;
+				messageButtons[messagePart[x] == '.' ? 0 : 1].OnInteract();
+				yield return new WaitForSeconds(0.1f);
+            }
+			if (!incorrect)
+			{
+				messageButtons.PickRandom().OnInteract();
+			}
 		}
-		if (command == "submit /") 
+		else if (hertzFreqMatch.Success)
 		{
-			messageButtons[1].OnInteract();
+			var selectedHertz = hertzFreqMatch.Value.Split().Last();
+			var convertedHertz = int.Parse(selectedHertz);
+			if (!chooserTable.Contains(convertedHertz))
+            {
+				yield return "sendtochaterror The selected hertz " + selectedHertz + " cannot be accessed on this module!";
+				yield break;
+            }
+			for (var x = 0; x < chooserTable.Length && convertedHertz != chooserTable.ElementAtOrDefault(hertzChooserNum); x++)
+			{
+				yield return null;
+				hertzButtons[1].OnInteract();
+				yield return new WaitForSeconds(0.1f);
+			}
+
 			yield return null;
-			yield break;
-		}
-		if (command == "switch hertz") 
-		{
-			hertzButtons[1].OnInteract();
-			yield return null;
-			yield break;
-		}
-		if (command == "tx hertz")
-		{
 			hertzButtons[0].OnInteract();
-			yield return null;
 		}
 	}
 
